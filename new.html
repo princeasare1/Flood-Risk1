@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flood Risk Zones - Greater Accra Region</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #1a5276;
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            height: 15vh;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #85c1e9;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 2rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #1a5276;
+            font-size: 2.5rem;
+        }
+        h3 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #1a5276;
+            font-size: 1rem;
+        }
+
+        /* Landing Section */
+        #landing {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('aerial\ view\ of\ flood.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        #landing h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        #landing p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Carousel Section */
+        .carousel-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            display: block;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition:background 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .prev-btn {
+            left: 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .next-btn {
+            right: 0;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ccc;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .indicator.active {
+            background: #1a5276;
+        }
+
+        /* Flood Prone Areas Section */
+        .areas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .area-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .area-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .area-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .area-info {
+            padding: 1.5rem;
+        }
+
+        .area-info h3 {
+            margin-bottom: 0.5rem;
+            color: #1a5276;
+        }
+
+        .area-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a5276;
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal h2 {
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+
+        .close-btn {
+            background-color: #1a5276;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        /* AI Chatbot Styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .chatbot-button {
+            background-color: #1a5276;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+            background-color: #21618c;
+        }
+
+        .chatbot-button i {
+            font-size: 24px;
+        }
+
+        .chatbot-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chatbot-header {
+            background-color: #1a5276;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 15px;
+            border-radius: 18px;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        .bot-message {
+            background-color: #e6f2ff;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .user-message {
+            background-color: #1a5276;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chatbot-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+        }
+
+        .chatbot-input button {
+            background-color: #1a5276;
+            color: white;
+            border: none;
+            width: 45px;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .chatbot-input button:hover {
+            background-color: #21618c;
+        }
+
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0 15px 15px;
+        }
+
+        .suggestion-chip {
+            background-color: #e6f2ff;
+            border: 1px solid #1a5276;
+            color: #1a5276;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .suggestion-chip:hover {
+            background-color: #1a5276;
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+
+            .nav-links {
+                margin-top: 1rem;
+            }
+
+            .nav-links li {
+                margin: 0 1rem;
+            }
+
+            #landing h1 {
+                font-size: 2.5rem;
+            }
+
+            section {
+                padding: 5rem 1rem 3rem;
+            }
+
+            .chatbot-window {
+                width: 300px;
+                height: 450px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Flood-Risk Map of Greater Accra Region</div>
+            <ul class="nav-links">
+                <li><a href="#landing">Home</a></li>
+                <li><a href="#carousel">Flood Images</a></li>
+                <li><a href="#areas">Prone Areas</a></li>
+                <li><a href="#areas">Flood-Risk Map</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Landing Section -->
+    <section id="landing">
+        <h1>Flood Risk Zones in Greater Accra</h1>
+        <p>Understanding and preparing for flood risks in the Greater Accra Region</p>
+        <button class="cta-button" id="learnMoreBtn">Learn More</button>
+    </section>
+
+    <!-- Carousel Section -->
+    <section id="carousel">
+        <h2>Recent Flood Events</h2>
+        <div class="carousel-container">
+            <div class="carousel-slides">
+                <div class="carousel-slide">
+                    <img src="aerial view of flood.jpg" alt="Aeriel View of Flood">
+                    <div class="carousel-caption">Flooding in central Accra after heavy rainfall</div>
+                </div>
+                <div class="carousel-slide">
+                    <img src="Accra-5-hour-flood.jpeg" alt="Flooded street">
+                    <div class="carousel-caption">Residents navigating flooded streets in Accra</div>
+                </div>
+                <div class="carousel-slide">
+                    <img src="wbr1uhg76o_fk04eqpdcw_accrarains.jpg" alt="Emergency response">
+                    <div class="carousel-caption">Emergency response during flood events</div>
+                </div>
+            </div>
+            <button class="carousel-btn prev-btn">&#10094;</button>
+            <button class="carousel-btn next-btn">&#10095;</button>
+            <div class="carousel-indicators">
+                <span class="indicator active"></span>
+                <span class="indicator"></span>
+                <span class="indicator"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flood Prone Areas Section -->
+    <section id="areas">
+        <h2>Flood Prone Areas in Greater Accra</h2>
+        <h3>Be extra cautious when traveling through these areas during heavy downpours</h3>
+        <div class="areas-grid">
+            <div class="area-card">
+                <img src="Odaw.jpg" alt="Odaw River">
+                <div class="area-info">
+                    <h3>Odaw River Basin</h3>
+                    <p>Frequent flooding due to blocked drainage systems and encroachment on the river's natural course.</p>
+                </div>
+            </div>
+            <div class="area-card">
+                <img src="FLOODS4444.webp" alt="Accra Central">
+                <div class="area-info">
+                    <h3>Accra Central Business District</h3>
+                    <p>Vulnerable to flash floods due to inadequate drainage infrastructure and high urbanization.</p>
+                </div>
+            </div>
+            <div class="area-card">
+                <img src="flood-tema.jpeg" alt="Tema">
+                <div class="area-info">
+                    <h3>Tema Metropolitan Area</h3>
+                    <p>Coastal flooding risks combined with urban drainage challenges in low-lying areas.</p>
+                </div>
+            </div>
+            <div class="area-card">
+                <img src="flood-ablekuma1.jpeg" alt="Ashaiman">
+                <div class="area-info">
+                    <h3>Ablekuma</h3>
+                    <p>High vulnerability due to informal settlements and poor drainage systems.</p>
+                </div>
+            </div>
+            <div class="area-card">
+                <img src="chemu-lagoon.jpeg" alt="Adenta">
+                <div class="area-info">
+                    <h3>Chemu-Lagoon</h3>
+                    <p>Chemu-Lagoon is fierced with improper waste disposal, causing blockage in the drainage system. This puts settlem around the lagoon at risk of flooding.</p>
+                </div>
+            </div>
+            <div class="area-card">
+                <img src="flood5.jpeg" alt="La Dade-Kotopon">
+                <div class="area-info">
+                    <h3>Mallam Junction</h3>
+                    <p>Coastal erosion and storm surge risks combined with urban flooding challenges.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Providing information and resources to help communities in Greater Accra prepare for and respond to flood risks.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#landing">Home</a>
+                <a href="#carousel">Flood Images</a>
+                <a href="#areas">Prone Areas</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: paasare030@st.ug.edu.gh</p>
+                <p>Phone: +233 55 019 8002</p>
+                <p>Address: University of Ghana, Legon - Accra</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Greater Accra Flood-Risk Map. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="infoModal">
+        <div class="modal-content">
+            <h2>Flood Preparedness Information</h2>
+            <p>Greater Accra Region faces significant flood risks, particularly during the rainy season. Key factors contributing to flooding include:</p>
+            <ul style="text-align: left; margin: 1rem 0;">
+                <li>Inadequate drainage infrastructure</li>
+                <li>Encroachment on watercourses and wetlands</li>
+                <li>Rapid urbanization outpacing infrastructure development</li>
+                <li>Poor waste management blocking drainage systems</li>
+                <li>Climate change intensifying rainfall patterns</li>
+            </ul>
+            <p>Stay informed and prepared by monitoring weather alerts and following evacuation guidelines when necessary.</p>
+            <button class="close-btn" id="closeModal">Close</button>
+        </div>
+    </div>
+
+    <!-- AI Chatbot -->
+    <div class="chatbot-container">
+        <div class="chatbot-button" id="chatbotButton">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <h3>Flood Risk Assistant</h3>
+                <button class="chatbot-close" id="chatbotClose">&times;</button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    Hello! I'm your Flood Risk Assistant. How can I help you today?
+                </div>
+                <div class="message bot-message">
+                    You can ask me about flood risks, safety tips, emergency contacts, or flood-prone areas in Greater Accra.
+                </div>
+            </div>
+            <div class="suggestion-chips">
+                <div class="suggestion-chip" data-message="What are the most flood-prone areas in Accra?">Flood-prone areas</div>
+                <div class="suggestion-chip" data-message="What should I do during a flood?">Safety tips</div>
+                <div class="suggestion-chip" data-message="Who should I contact in an emergency?">Emergency contacts</div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type your message...">
+                <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Carousel functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelector('.carousel-slides');
+            const slideCount = document.querySelectorAll('.carousel-slide').length;
+            const indicators = document.querySelectorAll('.indicator');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            let currentSlide = 0;
+
+            // Set initial slide position
+            updateSlidePosition();
+
+            // Next button click
+            nextBtn.addEventListener('click', function() {
+                currentSlide = (currentSlide + 1) % slideCount;
+                updateSlidePosition();
+            });
+
+            // Previous button click
+            prevBtn.addEventListener('click', function() {
+                currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+                updateSlidePosition();
+            });
+
+            // Indicator clicks
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', function() {
+                    currentSlide = index;
+                    updateSlidePosition();
+                });
+            });
+
+            // Auto-advance slides every 5 seconds
+            setInterval(function() {
+                currentSlide = (currentSlide + 1) % slideCount;
+                updateSlidePosition();
+            }, 5000);
+
+            // Update slide position and active indicator
+            function updateSlidePosition() {
+                slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+                
+                // Update indicators
+                indicators.forEach((indicator, index) => {
+                    if (index === currentSlide) {
+                        indicator.classList.add('active');
+                    } else {
+                        indicator.classList.remove('active');
+                    }
+                });
+            }
+
+            // Modal functionality
+            const learnMoreBtn = document.getElementById('learnMoreBtn');
+            const modal = document.getElementById('infoModal');
+            const closeModal = document.getElementById('closeModal');
+
+            learnMoreBtn.addEventListener('click', function() {
+                modal.style.display = 'flex';
+            });
+
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            // Close modal when clicking outside the content
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // AI Chatbot functionality
+            const chatbotButton = document.getElementById('chatbotButton');
+            const chatbotWindow = document.getElementById('chatbotWindow');
+            const chatbotClose = document.getElementById('chatbotClose');
+            const chatbotMessages = document.getElementById('chatbotMessages');
+            const chatbotInput = document.getElementById('chatbotInput');
+            const chatbotSend = document.getElementById('chatbotSend');
+            const suggestionChips = document.querySelectorAll('.suggestion-chip');
+
+            // Toggle chatbot window
+            chatbotButton.addEventListener('click', function() {
+                chatbotWindow.style.display = 'flex';
+            });
+
+            chatbotClose.addEventListener('click', function() {
+                chatbotWindow.style.display = 'none';
+            });
+
+            // Send message function
+            function sendMessage() {
+                const message = chatbotInput.value.trim();
+                if (message) {
+                    addMessage(message, 'user');
+                    chatbotInput.value = '';
+                    generateResponse(message);
+                }
+            }
+
+            // Send message on button click
+            chatbotSend.addEventListener('click', sendMessage);
+
+            // Send message on Enter key
+            chatbotInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Suggestion chips
+            suggestionChips.forEach(chip => {
+                chip.addEventListener('click', function() {
+                    const message = this.getAttribute('data-message');
+                    addMessage(message, 'user');
+                    generateResponse(message);
+                });
+            });
+
+            // Add message to chat
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+                messageDiv.textContent = text;
+                chatbotMessages.appendChild(messageDiv);
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }
+
+            // Generate bot response
+            function generateResponse(userMessage) {
+                let response = "I'm not sure how to answer that. Please try asking about flood risks, safety tips, emergency contacts, or flood-prone areas.";
+                
+                const lowerMessage = userMessage.toLowerCase();
+                
+                if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+                    response = "Hello! How can I assist you with flood risk information today?";
+                } else if (lowerMessage.includes('flood-prone') || lowerMessage.includes('prone areas')) {
+                    response = "The most flood-prone areas in Greater Accra include Odaw River Basin, Accra Central, Tema, Ashaiman, Adenta, and La Dade-Kotopon. These areas face regular flooding due to drainage issues and urbanization.";
+                } else if (lowerMessage.includes('safety') || lowerMessage.includes('tip') || lowerMessage.includes('during flood')) {
+                    response = "During a flood: 1) Move to higher ground immediately. 2) Avoid walking or driving through floodwaters. 3) Stay away from electrical equipment. 4) Follow evacuation orders. 5) Keep emergency supplies ready. Always monitor weather alerts during rainy seasons.";
+                } else if (lowerMessage.includes('contact') || lowerMessage.includes('emergency') || lowerMessage.includes('help')) {
+                    response = "Emergency contacts for floods in Ghana: National Disaster Management Organization (NADMO) - 0302 662 042, Ghana Police - 191, Ambulance - 193, Fire Service - 192. Keep these numbers saved and contact NADMO for flood-specific assistance.";
+                } else if (lowerMessage.includes('cause') || lowerMessage.includes('why flood')) {
+                    response = "Flooding in Greater Accra is caused by multiple factors: heavy rainfall during rainy seasons, inadequate drainage systems, improper waste disposal blocking drains, encroachment on watercourses, and rapid urbanization that reduces natural water absorption areas.";
+                } else if (lowerMessage.includes('prepare') || lowerMessage.includes('preparedness')) {
+                    response = "To prepare for floods: 1) Know your area's flood risk. 2) Create an emergency plan. 3) Prepare an emergency kit with food, water, medications. 4) Keep important documents in waterproof containers. 5) Install check valves in plumbing. 6) Consider flood insurance if available.";
+                } else if (lowerMessage.includes('season') || lowerMessage.includes('when')) {
+                    response = "The main flood season in Greater Accra typically occurs during the rainy seasons: April-July and September-October. However, flooding can happen anytime there is heavy rainfall, especially in low-lying areas with poor drainage.";
+                } else if (lowerMessage.includes('thank')) {
+                    response = "You're welcome! Stay safe and remember to always monitor weather alerts during the rainy season. Is there anything else I can help with?";
+                } else if (lowerMessage.includes('map') || lowerMessage.includes('GIS map')) {
+                    response = "You can view the flood risk map of the Greater Accra Region by clicking on the 'Flood-Risk Map Button above'. It displays high, medium, and low-risk areas along with major drainage lines. Let me know if you want help understanding the map.";
+                } else if (lowerMessage.includes('safe zone') || lowerMessage.includes('evacuation')) {
+                    response = "Safe zones include open spaces such as schools, churches, parks, and hilltops that are mapped as safe zones. Click on the Flood-Risk Map Button above to access safe zones in Greater Accra Region.";
+                } else if (lowerMessage.includes('cause of flooding') || lowerMessage.includes('why flooding')) {
+                    response = "Flooding in Accra is mainly caused by poor drainage systems, building on waterways, heavy rainfall, and blocked drains. Click on the Flood-Risk Map Button above for more drainage analysis";
+                } else if (lowerMessage.includes('help') || lowerMessage.includes('assist')) {
+                    response = "I’m here to assist you with flood risk information, maps, emergency contacts, and safe zone locations. What would you like to know?";
+                } else if (lowerMessage.includes('about') || lowerMessage.includes('purpose')) {
+                    response = "This website provides GIS-based assessment of flood risk and emergency accessibility for the Greater Accra Region. It includes maps, flood-prone areas, safe zones, and emergency contacts.";
+                }
+                
+                // Simulate typing delay
+                setTimeout(() => {
+                    addMessage(response, 'bot');
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
